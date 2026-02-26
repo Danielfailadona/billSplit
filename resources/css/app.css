@@ -1,0 +1,548 @@
+/* App styles for SplitBill home view */
+:root {
+    --bg: #f6f8fb;
+    --card: #ffffff;
+    --muted: #6b7280;
+    --primary: #2563eb;
+    --accent: #06b6d4;
+    --radius: 10px;
+    --max: 1100px;
+}
+* {
+    box-sizing: border-box;
+}
+body {
+    font-family:
+        Inter,
+        ui-sans-serif,
+        system-ui,
+        Segoe UI,
+        Roboto,
+        "Helvetica Neue",
+        Arial;
+    line-height: 1.4;
+    margin: 0;
+    background: var(--bg);
+    color: #0f172a;
+}
+.container {
+    max-width: var(--max);
+    margin: 0 auto;
+    padding: 1rem;
+}
+.site-header {
+    background: linear-gradient(90deg, #0ea5a4, #2563eb);
+    color: #fff;
+    padding: 0.75rem 0;
+}
+.header-inner {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+.brand h1 {
+    margin: 0;
+    font-size: 1.25rem;
+    letter-spacing: 0.5px;
+}
+.brand span {
+    color: rgba(255, 255, 255, 0.95);
+    font-weight: 700;
+}
+.main-nav a {
+    color: rgba(255, 255, 255, 0.95);
+    text-decoration: none;
+    margin-left: 1rem;
+    font-weight: 600;
+}
+.main-grid {
+    display: grid;
+    grid-template-columns: 1fr 320px;
+    gap: 1.25rem;
+    margin-top: 2rem;
+}
+.panel {
+    background: var(--card);
+    padding: 1.25rem;
+    border-radius: var(--radius);
+    box-shadow: 0 6px 18px rgba(15, 23, 42, 0.06);
+}
+.sidebar {
+    position: sticky;
+    top: 1rem;
+}
+.muted {
+    color: var(--muted);
+    font-size: 0.95rem;
+}
+.form-card label {
+    display: block;
+    margin-bottom: 0.75rem;
+    font-size: 0.95rem;
+}
+.form-card input {
+    width: 100%;
+    padding: 0.6rem 0.75rem;
+    border: 1px solid #e6e9ef;
+    border-radius: 8px;
+    margin-top: 0.25rem;
+}
+.form-actions {
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+    margin-top: 1rem;
+}
+.btn-primary {
+    background: var(--primary);
+    color: #fff;
+    border: none;
+    padding: 0.6rem 0.9rem;
+    border-radius: 8px;
+    cursor: pointer;
+}
+.btn-outline {
+    background: transparent;
+    border: 1px solid #d1d5db;
+    padding: 0.5rem 0.8rem;
+    border-radius: 8px;
+    cursor: pointer;
+}
+.btn-link {
+    color: var(--primary);
+    text-decoration: none;
+    font-weight: 600;
+    margin-left: auto;
+}
+.card {
+    padding: 0.9rem;
+    border-radius: 8px;
+    background: linear-gradient(180deg, #ffffff, #fbfdff);
+    margin-bottom: 1rem;
+}
+.bills-list {
+    list-style: none;
+    padding: 0;
+    margin: 0 0 1rem 0;
+}
+.bill-item {
+    padding: 0.6rem 0.75rem;
+    border-radius: 6px;
+    border: 1px dashed #e5e7eb;
+    background: #fff;
+    margin-bottom: 0.5rem;
+}
+.bill-item.empty {
+    color: var(--muted);
+    text-align: center;
+}
+.block {
+    display: block;
+    width: 100%;
+    text-align: center;
+}
+.invite-form {
+    display: flex;
+    gap: 0.5rem;
+    align-items: center;
+}
+.invite-form input {
+    flex: 1;
+}
+.site-footer {
+    padding: 1.25rem 0;
+    text-align: center;
+    color: var(--muted);
+    margin-top: 2rem;
+}
+@media (max-width: 900px) {
+    .main-grid {
+        grid-template-columns: 1fr;
+    }
+    .main-nav {
+        display: none;
+    }
+}
+
+/* ================================
+   Dashboard - Common Styles
+   ================================ */
+.dashboard-card {
+    max-width: 900px;
+    margin: 2rem auto;
+    border-radius: 2.5rem;
+    padding: 2rem;
+}
+
+.dashboard-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 2rem;
+    flex-wrap: wrap;
+    gap: 1rem;
+}
+
+.user-badge {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+}
+
+.icon-badge {
+    width: 60px;
+    height: 60px;
+    border-radius: 40px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 2rem;
+}
+
+.user-label {
+    font-size: 2.2rem;
+    font-weight: 700;
+}
+
+.limit-chip {
+    padding: 0.5rem 1.5rem;
+    border-radius: 40px;
+    display: flex;
+    align-items: center;
+    gap: 0.6rem;
+    font-weight: 500;
+}
+
+.bills-section {
+    border-radius: 2rem;
+    padding: 1.5rem;
+    margin: 2rem 0;
+}
+
+.section-title {
+    font-size: 1.2rem;
+    font-weight: 600;
+    margin-bottom: 1rem;
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+}
+
+.bill-row {
+    padding: 1rem 1.5rem;
+    border-radius: 2rem;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-bottom: 0.8rem;
+}
+
+.bill-name {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+}
+
+.bill-actions {
+    display: flex;
+    gap: 0.5rem;
+}
+
+.action-btn {
+    width: 38px;
+    height: 38px;
+    border-radius: 40px;
+    border: none;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    font-size: 1rem;
+    transition: all 0.1s ease;
+}
+
+.action-btn:hover {
+    transform: scale(1.05);
+}
+
+.action-btn.disabled {
+    opacity: 0.3;
+    cursor: not-allowed;
+    pointer-events: none;
+}
+
+.features {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.8rem;
+    margin: 1.5rem 0;
+}
+
+.feature-btn {
+    border: none;
+    padding: 0.7rem 1.3rem;
+    border-radius: 40px;
+    display: flex;
+    align-items: center;
+    gap: 0.6rem;
+    font-weight: 500;
+    cursor: pointer;
+    font-size: 0.95rem;
+    transition: all 0.1s ease;
+}
+
+.feature-btn.disabled {
+    opacity: 0.6;
+    cursor: not-allowed;
+    pointer-events: none;
+}
+
+.upgrade-note,
+.upgrade-area,
+.status-note {
+    margin-top: 1.5rem;
+    padding: 1rem 1.5rem;
+    border-radius: 60px;
+    display: inline-flex;
+    align-items: center;
+    gap: 0.8rem;
+    cursor: pointer;
+    transition: all 0.1s ease;
+}
+
+.badge {
+    padding: 0.2rem 0.8rem;
+    border-radius: 30px;
+    font-size: 0.8rem;
+    margin-left: 0.5rem;
+}
+
+.logout-section {
+    margin-top: 2rem;
+    display: flex;
+    justify-content: flex-end;
+}
+
+.info-note {
+    margin-top: 1rem;
+    font-size: 0.85rem;
+    display: flex;
+    align-items: center;
+    gap: 0.4rem;
+}
+
+/* ================================
+   Dashboard - Standard (Blue)
+   ================================ */
+body.dashboard-standard {
+    background: #eef2f7;
+}
+
+body.dashboard-standard .dashboard-card {
+    background: white;
+    box-shadow: 0 25px 40px -15px rgba(0,20,40,0.15);
+    border: 1px solid rgba(0,0,0,0.03);
+}
+
+body.dashboard-standard .icon-badge {
+    background: #e1ecf9;
+    color: #1e6b9b;
+}
+
+body.dashboard-standard .user-label {
+    color: #1e4a6b;
+}
+
+body.dashboard-standard .limit-chip {
+    background: #e1ecf9;
+    color: #1e4a6b;
+}
+
+body.dashboard-standard .bills-section {
+    background: #f5f9ff;
+}
+
+body.dashboard-standard .bill-row {
+    background: white;
+    border: 1px solid rgba(0,0,0,0.02);
+}
+
+body.dashboard-standard .action-btn {
+    background: #f0f5fe;
+    color: #1e2b3f;
+}
+
+body.dashboard-standard .action-btn:hover {
+    background: #e0e9fa;
+}
+
+body.dashboard-standard .feature-btn {
+    background: #f5f9ff;
+    color: #1e4a6b;
+}
+
+body.dashboard-standard .feature-btn:hover {
+    background: #e6eefa;
+}
+
+body.dashboard-standard .upgrade-note {
+    background: #f5f9ff;
+    border: 1px dashed #1e4a6b40;
+    color: #1e4a6b;
+}
+
+body.dashboard-standard .upgrade-note:hover {
+    background: #e1ecf9;
+}
+
+body.dashboard-standard .badge {
+    background: rgba(30, 74, 107, 0.1);
+    color: #1e4a6b;
+}
+
+/* ================================
+   Dashboard - Guest (Brown/Beige)
+   ================================ */
+body.dashboard-guest {
+    background: #f3efe9;
+}
+
+body.dashboard-guest .dashboard-card {
+    background: #ffffffd9;
+    box-shadow: 0 25px 40px -15px rgba(60,40,20,0.15);
+    border: 1px solid #eaddce;
+}
+
+body.dashboard-guest .icon-badge {
+    background: #ece5d9;
+    color: #7d5e40;
+}
+
+body.dashboard-guest .user-label {
+    color: #5b4b3a;
+}
+
+body.dashboard-guest .limit-chip {
+    background: #ece5d9;
+    color: #5b4b3a;
+}
+
+body.dashboard-guest .bills-section {
+    background: #f8f3ec;
+}
+
+body.dashboard-guest .section-title {
+    color: #5b4b3a;
+}
+
+body.dashboard-guest .bill-row {
+    background: white;
+    border: 1px solid #ede0d2;
+}
+
+body.dashboard-guest .action-btn {
+    background: #f0f5fe;
+    color: #1e2b3f;
+}
+
+body.dashboard-guest .action-btn:hover {
+    background: #e0e9fa;
+}
+
+body.dashboard-guest .action-btn.disabled {
+    background: #e2e8f2;
+    color: #7b89a2;
+}
+
+body.dashboard-guest .feature-btn {
+    background: white;
+    border: 1px solid #ede0d2;
+    color: #5b4b3a;
+}
+
+body.dashboard-guest .feature-btn:hover {
+    background: #f5ede1;
+}
+
+body.dashboard-guest .feature-btn.disabled {
+    background: #f1eae1;
+    color: #9a8c7a;
+    border-color: #ddd0c2;
+}
+
+body.dashboard-guest .upgrade-area {
+    background: #ece5d9;
+    border: 1px dashed #7d5e40;
+    color: #5b4b3a;
+}
+
+body.dashboard-guest .upgrade-area:hover {
+    background: #e3d9c9;
+}
+
+body.dashboard-guest .info-note {
+    color: #7d5e40;
+}
+
+/* ================================
+   Dashboard - Premium (Gold)
+   ================================ */
+body.dashboard-premium {
+    background: linear-gradient(145deg, #f0f4fa, #e6ecf5);
+}
+
+body.dashboard-premium .dashboard-card {
+    background: rgba(255,255,255,0.75);
+    backdrop-filter: blur(12px);
+    border: 1px solid rgba(255,255,255,0.7);
+    box-shadow: 0 25px 40px -15px rgba(0,20,40,0.25);
+}
+
+body.dashboard-premium .icon-badge {
+    background: white;
+    color: #b27d40;
+    box-shadow: 0 8px 12px rgba(0,0,0,0.05);
+}
+
+body.dashboard-premium .user-label {
+    color: #9d6c3a;
+}
+
+body.dashboard-premium .limit-chip {
+    background: white;
+    color: #9d6c3a;
+}
+
+body.dashboard-premium .bills-section {
+    background: rgba(255,255,255,0.5);
+}
+
+body.dashboard-premium .bill-row {
+    background: white;
+}
+
+body.dashboard-premium .action-btn {
+    background: #f0f5fe;
+    color: #1e2b3f;
+}
+
+body.dashboard-premium .action-btn:hover {
+    background: #e0e9fa;
+}
+
+body.dashboard-premium .feature-btn {
+    background: white;
+    color: #5b4b3a;
+    box-shadow: 0 4px 8px rgba(0,0,0,0.02);
+}
+
+body.dashboard-premium .feature-btn:hover {
+    background: #f5f5ff;
+    box-shadow: 0 6px 12px rgba(0,0,0,0.05);
+}
+
+body.dashboard-premium .status-note {
+    background: rgba(255,255,255,0.6);
+    border: 1px dashed rgba(0,0,0,0.1);
+    color: #5b4b3a;
+}
