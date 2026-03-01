@@ -10,7 +10,7 @@
     <main class="container" style="max-width:420px;margin:3rem auto;">
         <section class="panel">
             <h2>Log In</h2>
-            <p class="muted">Sign in to access your dashboard.</p>
+            <p class="muted">Sign in to access your dashboard dash.</p>
 
             @if($errors->any())
                 <div style="color:#b91c1c;margin-bottom:0.75rem">{{ $errors->first() }}</div>
