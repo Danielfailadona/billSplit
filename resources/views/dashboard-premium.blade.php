@@ -19,32 +19,57 @@
 
         <div class="bills-section">
             <div class="section-title"><i class="fa-regular fa-rectangle-list"></i> Your bills</div>
-            <div class="bill-row">
-                <div class="bill-name"><i class="fa-solid fa-receipt"></i> Company dinner</div>
-                <div class="bill-actions">
-                    <button class="action-btn" title="View"><i class="fa-regular fa-eye"></i></button>
-                    <button class="action-btn" title="Edit"><i class="fa-regular fa-pen-to-square"></i></button>
-                    <button class="action-btn" title="Delete"><i class="fa-regular fa-trash-can"></i></button>
-                    <button class="action-btn" title="Archive"><i class="fa-regular fa-box-archive"></i></button>
-                </div>
+
+            @if($bills->count() > 0)
+            <table class="bills-table">
+                <thead>
+                    <tr>
+                        <th>Bill Name</th>
+                        <th>Invitation Code</th>
+                        <th>Members</th>
+                        <th>Status</th>
+                        <th>Actions</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach($bills as $bill)
+                    <tr>
+                        <td>
+                            <i class="fa-solid fa-receipt"></i> {{ $bill->bill_name }}
+                        </td>
+                        <td><code>{{ $bill->invitation_code }}</code></td>
+                        <td>
+                            <span class="badge">{{ $bill->participants_count }} members</span>
+                        </td>
+                        <td>
+                            <span class="status-badge status-{{ $bill->status }}">{{ $bill->status }}</span>
+                        </td>
+                        <td>
+                            <div class="bill-actions">
+                                <button class="action-btn" id="btn-view-{{ $bill->id }}" title="View"><i class="fa-regular fa-eye"></i></button>
+                                <button class="action-btn" id="btn-edit-{{ $bill->id }}" title="Edit"><i class="fa-regular fa-pen-to-square"></i></button>
+                                <button class="action-btn" id="btn-delete-{{ $bill->id }}" title="Delete"><i class="fa-regular fa-trash-can"></i></button>
+                                <button class="action-btn" id="btn-archive-{{ $bill->id }}" title="Archive"><i class="fa-regular fa-box-archive"></i></button>
+                            </div>
+                        </td>
+                    </tr>
+                    @endforeach
+                </tbody>
+            </table>
+            @else
+            <div class="empty-state">
+                <i class="fa-solid fa-inbox"></i>
+                <p>No bills yet. Create your first split!</p>
             </div>
-            <div class="bill-row">
-                <div class="bill-name"><i class="fa-solid fa-receipt"></i> Beach house</div>
-                <div class="bill-actions">
-                    <button class="action-btn" title="View"><i class="fa-regular fa-eye"></i></button>
-                    <button class="action-btn" title="Edit"><i class="fa-regular fa-pen-to-square"></i></button>
-                    <button class="action-btn" title="Delete"><i class="fa-regular fa-trash-can"></i></button>
-                    <button class="action-btn" title="Archive"><i class="fa-regular fa-box-archive"></i></button>
-                </div>
-            </div>
+            @endif
         </div>
 
         <div class="features">
-            <button class="feature-btn"><i class="fa-regular fa-plus"></i> create bill</button>
-            <button class="feature-btn"><i class="fa-regular fa-user-plus"></i> add person</button>
-            <button class="feature-btn"><i class="fa-regular fa-user"></i> add guest</button>
-            <button class="feature-btn"><i class="fa-regular fa-pen-to-square"></i> edit expense</button>
-            <button class="feature-btn"><i class="fa-regular fa-code"></i> generate code</button>
+            <button class="feature-btn" id="btn-create-bill"><i class="fa-regular fa-plus"></i> create bill</button>
+            <button class="feature-btn" id="btn-add-person"><i class="fa-regular fa-user-plus"></i> add person</button>
+            <button class="feature-btn" id="btn-add-guest"><i class="fa-regular fa-user"></i> add guest</button>
+            <button class="feature-btn" id="btn-edit-expense"><i class="fa-regular fa-pen-to-square"></i> edit expense</button>
+            <button class="feature-btn" id="btn-generate-code"><i class="fa-regular fa-code"></i> generate code</button>
         </div>
 
         <div class="status-note">
@@ -55,7 +80,7 @@
         <div class="logout-section">
             <form action="/logout" method="POST">
                 @csrf
-                <button class="btn-outline" type="submit">
+                <button class="btn-outline" type="submit" id="btn-logout">
                     <i class="fa-solid fa-arrow-right-from-bracket"></i> Logout
                 </button>
             </form>

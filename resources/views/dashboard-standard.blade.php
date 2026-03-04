@@ -15,45 +15,62 @@
                 <span class="user-label">Standard Member</span>
             </div>
             <div class="limit-chip">
-                <i class="fa-solid fa-chart-pie"></i> 3/5 Splits Utilized
+                <i class="fa-solid fa-chart-pie"></i> {{ $bills->count() }}/5 Splits Utilized
             </div>
         </div>
 
         <div class="bills-section">
             <div class="section-title"><i class="fa-solid fa-book-journal-whills"></i> Active Ledgers</div>
-            
-            <div class="bill-row">
-                <div class="bill-name">
-                    <i class="fa-solid fa-receipt"></i> Artisan Groceries 
-                    <span class="badge">3 members</span>
-                </div>
-                <div class="bill-actions">
-                    <button class="action-btn" title="Inspect"><i class="fa-solid fa-eye"></i></button>
-                    <button class="action-btn" title="Modify"><i class="fa-solid fa-pen-nib"></i></button>
-                    <button class="action-btn" title="Void"><i class="fa-solid fa-trash"></i></button>
-                    <button class="action-btn" title="Store"><i class="fa-solid fa-vault"></i></button>
-                </div>
-            </div>
 
-            <div class="bill-row">
-                <div class="bill-name">
-                    <i class="fa-solid fa-receipt"></i> Gala Contribution 
-                    <span class="badge">2 members</span>
-                </div>
-                <div class="bill-actions">
-                    <button class="action-btn" title="Inspect"><i class="fa-solid fa-eye"></i></button>
-                    <button class="action-btn" title="Modify"><i class="fa-solid fa-pen-nib"></i></button>
-                    <button class="action-btn" title="Void"><i class="fa-solid fa-trash"></i></button>
-                    <button class="action-btn" title="Store"><i class="fa-solid fa-vault"></i></button>
-                </div>
+            @if($bills->count() > 0)
+            <table class="bills-table">
+                <thead>
+                    <tr>
+                        <th>Bill Name</th>
+                        <th>Invitation Code</th>
+                        <th>Members</th>
+                        <th>Status</th>
+                        <th>Actions</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach($bills as $bill)
+                    <tr>
+                        <td>
+                            <i class="fa-solid fa-receipt"></i> {{ $bill->bill_name }}
+                        </td>
+                        <td><code>{{ $bill->invitation_code }}</code></td>
+                        <td>
+                            <span class="badge">{{ $bill->participants_count }} members</span>
+                        </td>
+                        <td>
+                            <span class="status-badge status-{{ $bill->status }}">{{ $bill->status }}</span>
+                        </td>
+                        <td>
+                            <div class="bill-actions">
+                                <button class="action-btn" id="btn-view-{{ $bill->id }}" title="Inspect"><i class="fa-solid fa-eye"></i></button>
+                                <button class="action-btn" id="btn-modify-{{ $bill->id }}" title="Modify"><i class="fa-solid fa-pen-nib"></i></button>
+                                <button class="action-btn" id="btn-void-{{ $bill->id }}" title="Void"><i class="fa-solid fa-trash"></i></button>
+                                <button class="action-btn" id="btn-store-{{ $bill->id }}" title="Store"><i class="fa-solid fa-vault"></i></button>
+                            </div>
+                        </td>
+                    </tr>
+                    @endforeach
+                </tbody>
+            </table>
+            @else
+            <div class="empty-state">
+                <i class="fa-solid fa-inbox"></i>
+                <p>No active bills yet. Start a new split!</p>
             </div>
+            @endif
         </div>
 
         <div class="features">
-            <button class="btn-primary"><i class="fa-solid fa-plus"></i> Initiate New Split</button>
-            <button class="feature-btn"><i class="fa-solid fa-user-plus"></i> Invite Member (max 3)</button>
-            <button class="feature-btn"><i class="fa-solid fa-id-badge"></i> Authorize Guest</button>
-            <button class="feature-btn"><i class="fa-solid fa-file-invoice-dollar"></i> Adjust Expenses</button>
+            <button class="btn-primary" id="btn-initiate-split"><i class="fa-solid fa-plus"></i> Initiate New Split</button>
+            <button class="feature-btn" id="btn-invite-member"><i class="fa-solid fa-user-plus"></i> Invite Member (max 3)</button>
+            <button class="feature-btn" id="btn-authorize-guest"><i class="fa-solid fa-id-badge"></i> Authorize Guest</button>
+            <button class="feature-btn" id="btn-adjust-expenses"><i class="fa-solid fa-file-invoice-dollar"></i> Adjust Expenses</button>
         </div>
 
         <a href="#" class="upgrade-note">
@@ -64,7 +81,7 @@
         <div class="logout-section">
             <form action="/logout" method="POST">
                 @csrf
-                <button class="btn-outline" type="submit">
+                <button class="btn-outline" type="submit" id="btn-logout">
                     <i class="fa-solid fa-arrow-right-from-bracket"></i> Secure Logout
                 </button>
             </form>

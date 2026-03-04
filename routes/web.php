@@ -1,55 +1,29 @@
 <?php
 
 use App\Http\Controllers\UserController;
+use App\Http\Controllers\DashboardController;
 use Illuminate\Support\Facades\Route;
 use Illuminate\Support\Facades\Auth;
-use Illuminate\Http\Request;
 
-Route::get('/', function () {
-    return view('home');
-});
-
-// Show standalone login page
-Route::get('/login', function () {
-    return view('login');
-})->name('login');
-
-// Handle login POST
+// Public routes
+Route::get('/', fn() => view('home'));
+Route::get('/login', fn() => view('login'))->name('login');
 Route::post('/login', [UserController::class, 'login']);
-
-// Show registration page
-Route::get('/register', function () {
-    return view('register');
-});
-
-// Handle registration POST
+Route::get('/register', fn() => view('register'));
 Route::post('/register', [UserController::class, 'register']);
+Route::get('/guest-login', fn() => view('guest-login'));
+Route::post('/guest-login', [UserController::class, 'guestLogin']);
 
-// Dashboard - only for authenticated users
-Route::get('/dashboard', function () {
-    return view('dashboard');
-})->middleware('auth');
+// Protected routes
+Route::get('/dashboard', fn() => view('dashboard'))->middleware('auth');
+Route::get('/dashboard-standard', [DashboardController::class, 'standard'])->middleware('auth');
+Route::get('/dashboard-guest', [DashboardController::class, 'guest'])->middleware('auth');
+Route::get('/dashboard-premium', [DashboardController::class, 'premium'])->middleware('auth');
 
-// Dashboard - Standard User
-Route::get('/dashboard-standard', function () {
-    return view('dashboard-standard');
-})->middleware('auth');
-
-// Dashboard - Guest User
-Route::get('/dashboard-guest', function () {
-    return view('dashboard-guest');
-})->middleware('auth');
-
-// Dashboard - Premium User
-Route::get('/dashboard-premium', function () {
-    return view('dashboard-premium');
-})->middleware('auth');
-
-// Logout route
-Route::post('/logout', function (Request $request) {
+// Logout
+Route::post('/logout', function ($request) {
     Auth::logout();
     $request->session()->invalidate();
     $request->session()->regenerateToken();
     return redirect('/');
 });
-   

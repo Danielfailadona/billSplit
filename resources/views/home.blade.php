@@ -35,7 +35,7 @@
 
             <h3>Join Existing Split</h3>
             <p class="muted">Enter a guest code provided by a member.</p>
-            <form action="#" method="GET" class="form-group">
+            <form action="/guest-login" method="GET" class="form-group">
                 <div class="invite-form">
                     <input type="text" name="code" placeholder="Enter secure invite code">
                     <button class="btn-outline">Verify & Join</button>

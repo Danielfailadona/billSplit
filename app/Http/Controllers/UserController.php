@@ -3,63 +3,94 @@
 namespace App\Http\Controllers;
 
 use App\Models\User;
+use App\Models\Bill;
+use App\Models\BillParticipant;
+use App\Models\Invitation;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
-use Illuminate\Support\Facades\Hash;
 
 class UserController extends Controller
 {
-    /**
-     * Attempt to log the user in.
-     * On success, redirect to dashboard. On failure, redirect back with error.
-     */
     public function login(Request $request)
     {
-        $incoming = $request->validate([
-            'email' => ['required', 'email'],
-            'password' => ['required', 'string', 'min:8'],
+        $request->validate([
+            'email' => 'required|email',
+            'password' => 'required|string|min:8',
         ]);
 
-        $credentials = ['email' => $incoming['email'], 'password' => $incoming['password']];
-
-        if (Auth::attempt($credentials)) {
+        if (Auth::attempt($request->only('email', 'password'))) {
             $request->session()->regenerate();
-            return redirect()->intended('/dashboard-standard');
+            
+            // Redirect based on user type
+            return Auth::user()->user_type === 'premium' 
+                ? redirect('/dashboard-premium') 
+                : redirect('/dashboard-standard');
         }
 
-        return back()->withErrors([
-            'email' => 'The provided credentials do not match our records.',
-        ])->onlyInput('email');
+        return back()->withErrors(['email' => 'Invalid credentials']);
     }
 
-    /**
-     * Register a new user, log them in and redirect to dashboard.
-     */
     public function register(Request $request)
     {
-        $data = $request->validate([
-            'first_name' => ['required', 'string', 'max:255'],
-            'last_name' => ['required', 'string', 'max:255'],
-            'email' => ['required', 'email', 'max:255', 'unique:users,email'],
-            'password' => [
-                'required',
-                'string',
-                'confirmed',
-                'min:8',
-                'max:16',
-                'regex:/^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[^A-Za-z0-9]).+$/'
-            ],
+        $request->validate([
+            'first_name' => 'required|string|max:50',
+            'last_name' => 'required|string|max:50',
+            'email' => 'required|email|unique:users',
+            'password' => 'required|string|min:8|max:16|confirmed',
         ]);
 
         $user = User::create([
-            'name' => $data['first_name'] . ' ' . $data['last_name'],
-            'email' => $data['email'],
-            'password' => $data['password'],
+            'first_name' => $request->first_name,
+            'last_name' => $request->last_name,
+            'email' => $request->email,
+            'user_type' => 'standard',
+            'password' => $request->password,
         ]);
 
         Auth::login($user);
         $request->session()->regenerate();
 
         return redirect('/dashboard-standard');
+    }
+
+    public function guestLogin(Request $request)
+    {
+        $request->validate([
+            'first_name' => 'required|string|max:50',
+            'last_name' => 'required|string|max:50',
+            'email' => 'required|email',
+            'associated_code' => 'required|string|max:20',
+        ]);
+
+        // Find valid invitation
+        $invitation = Invitation::where('invitation_code', $request->associated_code)
+            ->where('status', 'pending')
+            ->first();
+
+        if (!$invitation) {
+            return back()->withErrors(['associated_code' => 'Invalid invitation code']);
+        }
+
+        // Create guest user
+        $guest = User::create([
+            'first_name' => $request->first_name,
+            'last_name' => $request->last_name,
+            'email' => $request->email,
+            'user_type' => 'guest',
+        ]);
+
+        // Add to bill
+        BillParticipant::create([
+            'bill_id' => $invitation->bill_id,
+            'user_id' => $guest->id,
+        ]);
+
+        // Mark invitation as accepted
+        $invitation->update(['status' => 'accepted']);
+
+        // Store guest in session
+        session(['guest_user' => $guest->id]);
+
+        return redirect('/dashboard-guest');
     }
 }
