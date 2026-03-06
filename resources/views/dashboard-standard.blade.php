@@ -82,7 +82,7 @@
             <form action="/logout" method="POST">
                 @csrf
                 <button class="btn-outline" type="submit" id="btn-logout">
-                    <i class="fa-solid fa-arrow-right-from-bracket"></i> Secure Logout
+                    <i class="fa-solid fa-arrow-right-from-bracket"></i> Logout
                 </button>
             </form>
         </div>

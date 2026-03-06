@@ -31,8 +31,8 @@
                 </div>
                 
                 <div class="form-actions">
-                    <button type="submit" class="btn-primary">Authenticate</button>
-                    <a href="/" class="btn-link">Return Home</a>
+                    <button type="submit" class="btn-primary">Login</button>
+                    <a href="/register" class="btn-link">Register</a>
                 </div>
             </form>
         </section>

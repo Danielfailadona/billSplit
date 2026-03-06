@@ -50,8 +50,8 @@
                 </div>
                 
                 <div class="form-actions">
-                    <button type="submit" class="btn-primary">Request Access</button>
-                    <a href="/login" class="btn-link">Already a member?</a>
+                    <button type="submit" class="btn-primary">Create Account</button>
+                    <a href="/login" class="btn-link">Login</a>
                 </div>
             </form>
         </section>
