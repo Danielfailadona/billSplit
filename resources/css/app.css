@@ -58,7 +58,7 @@ body {
 }
 
 .register-container {
-    max-width: 560px;
+    max-width: 660px;
     margin: 3rem auto;
 }
 
@@ -514,7 +514,7 @@ input:focus {
     background: var(--bg-matte);
     padding: 0.25rem 0.5rem;
     border-radius: 4px;
-    font-family: 'Courier New', monospace;
+    font-family: "Courier New", monospace;
     color: var(--gold-primary);
     font-size: 0.85rem;
 }

@@ -9,8 +9,8 @@
 <body>
     <main class="container auth-container">
         <section class="panel">
-            <h2>Guest Access</h2>
-            <p class="muted">Join an existing split as a guest.</p>
+            <h2>Guest Login</h2>
+            <p class="muted">Access your guest dashboard.</p>
 
             @if($errors->any())
                 <div class="alert-error">
@@ -21,27 +21,12 @@
             <form action="/guest-login" method="POST" class="form-card">
                 @csrf
                 <div class="form-group">
-                    <label for="first_name">First Name</label>
-                    <input type="text" id="first_name" name="first_name" value="{{ old('first_name') }}" required>
-                </div>
-
-                <div class="form-group">
-                    <label for="last_name">Last Name</label>
-                    <input type="text" id="last_name" name="last_name" value="{{ old('last_name') }}" required>
-                </div>
-
-                <div class="form-group">
                     <label for="email">Email Address</label>
-                    <input type="email" id="email" name="email" value="{{ old('email') }}" required>
-                </div>
-
-                <div class="form-group">
-                    <label for="associated_code">Associated Code</label>
-                    <input type="text" id="associated_code" name="associated_code" value="{{ old('associated_code', request('code')) }}" required placeholder="Enter invite code">
+                    <input type="email" id="email" name="email" value="{{ old('email') }}" required placeholder="you@guest.com">
                 </div>
 
                 <div class="form-actions">
-                    <button type="submit" class="btn-primary">Join as Guest</button>
+                    <button type="submit" class="btn-primary">Login as Guest</button>
                     <a href="/" class="btn-link">Return Home</a>
                 </div>
             </form>

@@ -79,7 +79,7 @@
         </a>
 
         <div class="logout-section">
-            <form action="/guest-logout" method="POST">
+            <form action="/logout" method="POST">
                 @csrf
                 <button class="btn-outline" type="submit" id="btn-logout">
                     <i class="fa-solid fa-arrow-right-from-bracket"></i> Logout

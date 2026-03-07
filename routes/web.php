@@ -24,13 +24,15 @@ Route::post('/test-input', function (\Illuminate\Http\Request $request) {
 });
 Route::get('/register', fn() => view('register'));
 Route::post('/register', [UserController::class, 'register']);
-Route::get('/guest-login', fn() => view('guest-login'));
+Route::get('/guest-login', fn() => view('guest-login'))->name('guest-login');
 Route::post('/guest-login', [UserController::class, 'guestLogin']);
+Route::get('/guest-registration', fn() => view('guest-registration'))->name('guest-registration');
+Route::post('/guest-registration', [UserController::class, 'guestRegister']);
 
 // Protected routes
 Route::get('/dashboard', fn() => view('dashboard'))->middleware('auth');
 Route::get('/dashboard-standard', [DashboardController::class, 'standard'])->middleware('auth');
-Route::get('/dashboard-guest', [DashboardController::class, 'guest'])->middleware('auth');
+Route::get('/dashboard-guest', [DashboardController::class, 'guest']);
 Route::get('/dashboard-premium', [DashboardController::class, 'premium'])->middleware('auth');
 
 // Logout
@@ -39,4 +41,10 @@ Route::post('/logout', function ($request) {
     $request->session()->invalidate();
     $request->session()->regenerateToken();
     return redirect('/');
+});
+Route::post('/guest-logout', function (\Illuminate\Http\Request $request) {
+    $request->session()->forget('guest_user');
+    $request->session()->invalidate();
+    $request->session()->regenerateToken();
+    return redirect('/guest-login');
 });

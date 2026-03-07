@@ -56,20 +56,37 @@ class UserController extends Controller
     public function guestLogin(Request $request)
     {
         $request->validate([
-            'first_name' => 'required|string|max:50',
-            'last_name' => 'required|string|max:50',
             'email' => 'required|email',
-            'associated_code' => 'required|string|max:20',
         ]);
 
-        // Find valid invitation
-        $invitation = Invitation::where('invitation_code', $request->associated_code)
-            ->where('status', 'pending')
+        // Find existing guest user by email
+        $guest = User::where('email', $request->email)
+            ->where('user_type', 'guest')
             ->first();
 
-        if (!$invitation) {
-            return back()->withErrors(['associated_code' => 'Invalid invitation code']);
+        // If not found, create a new guest user
+        if (!$guest) {
+            $guest = User::create([
+                'first_name' => 'Guest',
+                'last_name' => 'User',
+                'email' => $request->email,
+                'user_type' => 'guest',
+            ]);
         }
+
+        // Store guest in session
+        session(['guest_user' => $guest->id]);
+
+        return redirect('/dashboard-guest');
+    }
+
+    public function guestRegister(Request $request)
+    {
+        $request->validate([
+            'first_name' => 'required|string|max:50',
+            'last_name' => 'required|string|max:50',
+            'email' => 'required|email|unique:users',
+        ]);
 
         // Create guest user
         $guest = User::create([
@@ -78,15 +95,6 @@ class UserController extends Controller
             'email' => $request->email,
             'user_type' => 'guest',
         ]);
-
-        // Add to bill
-        BillParticipant::create([
-            'bill_id' => $invitation->bill_id,
-            'user_id' => $guest->id,
-        ]);
-
-        // Mark invitation as accepted
-        $invitation->update(['status' => 'accepted']);
 
         // Store guest in session
         session(['guest_user' => $guest->id]);

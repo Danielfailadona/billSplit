@@ -7,7 +7,7 @@
     @vite('resources/css/app.css')
 </head>
 <body>
-    <main class="container auth-container">
+    <main class="container register-container">
         <section class="panel">
             <h2>Log In</h2>
             <p class="muted">Access your premium dashboard.</p>
@@ -32,7 +32,13 @@
                 
                 <div class="form-actions">
                     <button type="submit" class="btn-primary">Login</button>
-                    <a href="/register" class="btn-link">Register</a>
+                    <div>
+                        <a href="/guest-login" class="btn-link">Login as Guest</a>
+                        <span style="color: var(--text-muted); margin: 0 0.5rem;">|</span>
+                        <a href="/register" class="btn-link">Register</a>
+                        <span style="color: var(--text-muted); margin: 0 0.5rem;">|</span>
+                        <a href="/guest-registration" class="btn-link">Register as Guest</a>
+                    </div>
                 </div>
             </form>
         </section>
